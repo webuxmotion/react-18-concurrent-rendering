@@ -1,5 +1,7 @@
+import { Suspense } from 'react';
 import useSWR from 'swr';
 import type { Account } from '../../types';
+import { Loading } from '../Loading';
 import { LabelInput } from './LabelInput';
 interface Props {
   userId: number;
@@ -13,9 +15,11 @@ export function AccountDetails({ userId }: Props) {
 
   return (
     <div className="row">
-      <LabelInput label="Firstname" value={account.firstname} readOnly />
-      <LabelInput label="Surname" value={account.surname} readOnly />
-      <LabelInput label="Email address" value={account.email} readOnly />
+      <Suspense fallback={<Loading />}>
+        <LabelInput label="Firstname" value={account.firstname} readOnly />
+        <LabelInput label="Surname" value={account.surname} readOnly />
+        <LabelInput label="Email address" value={account.email} readOnly />
+      </Suspense>
     </div>
   );
 }
